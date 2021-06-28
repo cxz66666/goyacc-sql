@@ -1,0 +1,1750 @@
+
+state 0
+	$accept: .statements $end 
+
+	CREATE  shift 15
+	DROP  shift 17
+	EXECFILE  shift 22
+	USE  shift 16
+	SELECT  shift 18
+	INSERT  shift 19
+	UPDATE  shift 20
+	DELETE  shift 21
+	.  error
+
+	statements  goto 1
+	statement  goto 2
+	create_database  goto 3
+	use_database  goto 4
+	create_table  goto 5
+	create_index  goto 6
+	drop_database  goto 7
+	drop_table  goto 8
+	drop_index  goto 9
+	select_stmt  goto 10
+	insert_stmt  goto 11
+	update_stmt  goto 12
+	delete_stmt  goto 13
+	execfile_stmt  goto 14
+
+state 1
+	$accept:  statements.$end 
+	statements:  statements.statement 
+
+	$end  accept
+	CREATE  shift 15
+	DROP  shift 17
+	EXECFILE  shift 22
+	USE  shift 16
+	SELECT  shift 18
+	INSERT  shift 19
+	UPDATE  shift 20
+	DELETE  shift 21
+	.  error
+
+	statement  goto 23
+	create_database  goto 3
+	use_database  goto 4
+	create_table  goto 5
+	create_index  goto 6
+	drop_database  goto 7
+	drop_table  goto 8
+	drop_index  goto 9
+	select_stmt  goto 10
+	insert_stmt  goto 11
+	update_stmt  goto 12
+	delete_stmt  goto 13
+	execfile_stmt  goto 14
+
+state 2
+	statements:  statement.    (1)
+
+	.  reduce 1 (src line 103)
+
+
+state 3
+	statement:  create_database.';' 
+
+	';'  shift 24
+	.  error
+
+
+state 4
+	statement:  use_database.';' 
+
+	';'  shift 25
+	.  error
+
+
+state 5
+	statement:  create_table.';' 
+
+	';'  shift 26
+	.  error
+
+
+state 6
+	statement:  create_index.';' 
+
+	';'  shift 27
+	.  error
+
+
+state 7
+	statement:  drop_database.';' 
+
+	';'  shift 28
+	.  error
+
+
+state 8
+	statement:  drop_table.';' 
+
+	';'  shift 29
+	.  error
+
+
+state 9
+	statement:  drop_index.';' 
+
+	';'  shift 30
+	.  error
+
+
+state 10
+	statement:  select_stmt.';' 
+
+	';'  shift 31
+	.  error
+
+
+state 11
+	statement:  insert_stmt.';' 
+
+	';'  shift 32
+	.  error
+
+
+state 12
+	statement:  update_stmt.';' 
+
+	';'  shift 33
+	.  error
+
+
+state 13
+	statement:  delete_stmt.';' 
+
+	';'  shift 34
+	.  error
+
+
+state 14
+	statement:  execfile_stmt.';' 
+
+	';'  shift 35
+	.  error
+
+
+state 15
+	create_database:  CREATE.DATABASE database_id 
+	create_table:  CREATE.TABLE table_name '(' column_def_list ',' primary_key ')' cluster_opt 
+	create_table:  CREATE.TABLE table_name '(' column_def_list ')' cluster_opt 
+	create_index:  CREATE.unique_opt INDEX index_name ON table_name '(' key_part_list ')' storing_clause_opt interleave_clause_list 
+	unique_opt: .    (52)
+
+	UNIQUE  shift 39
+	DATABASE  shift 36
+	TABLE  shift 37
+	.  reduce 52 (src line 366)
+
+	unique_opt  goto 38
+
+state 16
+	use_database:  USE.DATABASE database_id 
+
+	DATABASE  shift 40
+	.  error
+
+
+state 17
+	drop_database:  DROP.DATABASE database_id 
+	drop_table:  DROP.TABLE table_name 
+	drop_index:  DROP.INDEX index_name ON table_name 
+
+	DATABASE  shift 41
+	TABLE  shift 42
+	INDEX  shift 43
+	.  error
+
+
+state 18
+	select_stmt:  SELECT.sel_field_list FROM table_name_list where_opt limit_opt 
+
+	IDENT_LEGAL  shift 47
+	'*'  shift 45
+	.  error
+
+	column_name_list  goto 46
+	sel_field_list  goto 44
+
+state 19
+	insert_stmt:  INSERT.INTO table_name VALUES '(' value_list ')' 
+	insert_stmt:  INSERT.INTO table_name '(' column_name_list ')' VALUES '(' value_list ')' 
+
+	INTO  shift 48
+	.  error
+
+
+state 20
+	update_stmt:  UPDATE.table_name SET set_opt_list where_opt 
+
+	table_name  shift 49
+	.  error
+
+
+state 21
+	delete_stmt:  DELETE.FROM IDENT_ALL where_opt 
+
+	FROM  shift 50
+	.  error
+
+
+state 22
+	execfile_stmt:  EXECFILE.IDENT_ALL 
+	execfile_stmt:  EXECFILE.IDENT_ALL '.' IDENT_ALL 
+	execfile_stmt:  EXECFILE.string_value 
+
+	IDENT  shift 53
+	IDENT_LEGAL  shift 54
+	string_value  shift 52
+	.  error
+
+	IDENT_ALL  goto 51
+
+state 23
+	statements:  statements statement.    (2)
+
+	.  reduce 2 (src line 105)
+
+
+state 24
+	statement:  create_database ';'.    (3)
+
+	.  reduce 3 (src line 107)
+
+
+state 25
+	statement:  use_database ';'.    (4)
+
+	.  reduce 4 (src line 109)
+
+
+state 26
+	statement:  create_table ';'.    (5)
+
+	.  reduce 5 (src line 110)
+
+
+state 27
+	statement:  create_index ';'.    (6)
+
+	.  reduce 6 (src line 111)
+
+
+state 28
+	statement:  drop_database ';'.    (7)
+
+	.  reduce 7 (src line 112)
+
+
+state 29
+	statement:  drop_table ';'.    (8)
+
+	.  reduce 8 (src line 113)
+
+
+state 30
+	statement:  drop_index ';'.    (9)
+
+	.  reduce 9 (src line 114)
+
+
+state 31
+	statement:  select_stmt ';'.    (10)
+
+	.  reduce 10 (src line 115)
+
+
+state 32
+	statement:  insert_stmt ';'.    (11)
+
+	.  reduce 11 (src line 116)
+
+
+state 33
+	statement:  update_stmt ';'.    (12)
+
+	.  reduce 12 (src line 117)
+
+
+state 34
+	statement:  delete_stmt ';'.    (13)
+
+	.  reduce 13 (src line 118)
+
+
+state 35
+	statement:  execfile_stmt ';'.    (14)
+
+	.  reduce 14 (src line 119)
+
+
+state 36
+	create_database:  CREATE DATABASE.database_id 
+
+	database_id  shift 55
+	.  error
+
+
+state 37
+	create_table:  CREATE TABLE.table_name '(' column_def_list ',' primary_key ')' cluster_opt 
+	create_table:  CREATE TABLE.table_name '(' column_def_list ')' cluster_opt 
+
+	table_name  shift 56
+	.  error
+
+
+state 38
+	create_index:  CREATE unique_opt.INDEX index_name ON table_name '(' key_part_list ')' storing_clause_opt interleave_clause_list 
+
+	INDEX  shift 57
+	.  error
+
+
+state 39
+	unique_opt:  UNIQUE.    (53)
+
+	.  reduce 53 (src line 371)
+
+
+state 40
+	use_database:  USE DATABASE.database_id 
+
+	database_id  shift 58
+	.  error
+
+
+state 41
+	drop_database:  DROP DATABASE.database_id 
+
+	database_id  shift 59
+	.  error
+
+
+state 42
+	drop_table:  DROP TABLE.table_name 
+
+	table_name  shift 60
+	.  error
+
+
+state 43
+	drop_index:  DROP INDEX.index_name ON table_name 
+
+	index_name  shift 61
+	.  error
+
+
+state 44
+	select_stmt:  SELECT sel_field_list.FROM table_name_list where_opt limit_opt 
+
+	FROM  shift 62
+	.  error
+
+
+state 45
+	sel_field_list:  '*'.    (74)
+
+	.  reduce 74 (src line 520)
+
+
+state 46
+	column_name_list:  column_name_list.',' IDENT_LEGAL 
+	sel_field_list:  column_name_list.    (75)
+
+	','  shift 63
+	.  reduce 75 (src line 527)
+
+
+state 47
+	column_name_list:  IDENT_LEGAL.    (57)
+
+	.  reduce 57 (src line 393)
+
+
+state 48
+	insert_stmt:  INSERT INTO.table_name VALUES '(' value_list ')' 
+	insert_stmt:  INSERT INTO.table_name '(' column_name_list ')' VALUES '(' value_list ')' 
+
+	table_name  shift 64
+	.  error
+
+
+state 49
+	update_stmt:  UPDATE table_name.SET set_opt_list where_opt 
+
+	SET  shift 65
+	.  error
+
+
+state 50
+	delete_stmt:  DELETE FROM.IDENT_ALL where_opt 
+
+	IDENT  shift 53
+	IDENT_LEGAL  shift 54
+	.  error
+
+	IDENT_ALL  goto 66
+
+state 51
+	execfile_stmt:  EXECFILE IDENT_ALL.    (15)
+	execfile_stmt:  EXECFILE IDENT_ALL.'.' IDENT_ALL 
+
+	'.'  shift 67
+	.  reduce 15 (src line 121)
+
+
+state 52
+	execfile_stmt:  EXECFILE string_value.    (17)
+
+	.  reduce 17 (src line 135)
+
+
+state 53
+	IDENT_ALL:  IDENT.    (112)
+
+	.  reduce 112 (src line 687)
+
+
+state 54
+	IDENT_ALL:  IDENT_LEGAL.    (113)
+
+	.  reduce 113 (src line 692)
+
+
+state 55
+	create_database:  CREATE DATABASE database_id.    (18)
+
+	.  reduce 18 (src line 142)
+
+
+state 56
+	create_table:  CREATE TABLE table_name.'(' column_def_list ',' primary_key ')' cluster_opt 
+	create_table:  CREATE TABLE table_name.'(' column_def_list ')' cluster_opt 
+
+	'('  shift 68
+	.  error
+
+
+state 57
+	create_index:  CREATE unique_opt INDEX.index_name ON table_name '(' key_part_list ')' storing_clause_opt interleave_clause_list 
+
+	index_name  shift 69
+	.  error
+
+
+state 58
+	use_database:  USE DATABASE database_id.    (19)
+
+	.  reduce 19 (src line 150)
+
+
+state 59
+	drop_database:  DROP DATABASE database_id.    (63)
+
+	.  reduce 63 (src line 425)
+
+
+state 60
+	drop_table:  DROP TABLE table_name.    (64)
+
+	.  reduce 64 (src line 434)
+
+
+state 61
+	drop_index:  DROP INDEX index_name.ON table_name 
+
+	ON  shift 70
+	.  error
+
+
+state 62
+	select_stmt:  SELECT sel_field_list FROM.table_name_list where_opt limit_opt 
+
+	IDENT  shift 53
+	IDENT_LEGAL  shift 54
+	.  error
+
+	IDENT_ALL  goto 72
+	table_name_list  goto 71
+
+state 63
+	column_name_list:  column_name_list ','.IDENT_LEGAL 
+
+	IDENT_LEGAL  shift 73
+	.  error
+
+
+state 64
+	insert_stmt:  INSERT INTO table_name.VALUES '(' value_list ')' 
+	insert_stmt:  INSERT INTO table_name.'(' column_name_list ')' VALUES '(' value_list ')' 
+
+	'('  shift 75
+	VALUES  shift 74
+	.  error
+
+
+state 65
+	update_stmt:  UPDATE table_name SET.set_opt_list where_opt 
+
+	IDENT_LEGAL  shift 78
+	.  error
+
+	set_opt  goto 77
+	set_opt_list  goto 76
+
+state 66
+	delete_stmt:  DELETE FROM IDENT_ALL.where_opt 
+	where_opt: .    (78)
+
+	WHERE  shift 80
+	.  reduce 78 (src line 546)
+
+	where_opt  goto 79
+
+state 67
+	execfile_stmt:  EXECFILE IDENT_ALL '.'.IDENT_ALL 
+
+	IDENT  shift 53
+	IDENT_LEGAL  shift 54
+	.  error
+
+	IDENT_ALL  goto 81
+
+state 68
+	create_table:  CREATE TABLE table_name '('.column_def_list ',' primary_key ')' cluster_opt 
+	create_table:  CREATE TABLE table_name '('.column_def_list ')' cluster_opt 
+	column_def_list: .    (22)
+
+	IDENT_LEGAL  shift 84
+	.  reduce 22 (src line 190)
+
+	column_def  goto 83
+	column_def_list  goto 82
+
+state 69
+	create_index:  CREATE unique_opt INDEX index_name.ON table_name '(' key_part_list ')' storing_clause_opt interleave_clause_list 
+
+	ON  shift 85
+	.  error
+
+
+state 70
+	drop_index:  DROP INDEX index_name ON.table_name 
+
+	table_name  shift 86
+	.  error
+
+
+state 71
+	select_stmt:  SELECT sel_field_list FROM table_name_list.where_opt limit_opt 
+	table_name_list:  table_name_list.',' IDENT_ALL 
+	where_opt: .    (78)
+
+	','  shift 88
+	WHERE  shift 80
+	.  reduce 78 (src line 546)
+
+	where_opt  goto 87
+
+state 72
+	table_name_list:  IDENT_ALL.    (76)
+
+	.  reduce 76 (src line 535)
+
+
+state 73
+	column_name_list:  column_name_list ',' IDENT_LEGAL.    (58)
+
+	.  reduce 58 (src line 399)
+
+
+state 74
+	insert_stmt:  INSERT INTO table_name VALUES.'(' value_list ')' 
+
+	'('  shift 89
+	.  error
+
+
+state 75
+	insert_stmt:  INSERT INTO table_name '('.column_name_list ')' VALUES '(' value_list ')' 
+
+	IDENT_LEGAL  shift 47
+	.  error
+
+	column_name_list  goto 90
+
+state 76
+	update_stmt:  UPDATE table_name SET set_opt_list.where_opt 
+	set_opt_list:  set_opt_list.',' set_opt 
+	where_opt: .    (78)
+
+	','  shift 92
+	WHERE  shift 80
+	.  reduce 78 (src line 546)
+
+	where_opt  goto 91
+
+state 77
+	set_opt_list:  set_opt.    (69)
+
+	.  reduce 69 (src line 482)
+
+
+state 78
+	set_opt:  IDENT_LEGAL.'=' Value 
+
+	'='  shift 93
+	.  error
+
+
+state 79
+	delete_stmt:  DELETE FROM IDENT_ALL where_opt.    (72)
+
+	.  reduce 72 (src line 500)
+
+
+state 80
+	where_opt:  WHERE.expr_opt 
+	Value: .    (90)
+
+	IDENT  shift 53
+	IDENT_LEGAL  shift 54
+	NOT  shift 98
+	NULL  shift 104
+	TRUE  shift 102
+	FALSE  shift 103
+	'('  shift 95
+	decimal_value  shift 105
+	hex_value  shift 106
+	float_value  shift 107
+	string_value  shift 99
+	.  reduce 90 (src line 604)
+
+	int64_value  goto 100
+	float64_value  goto 101
+	IDENT_ALL  goto 96
+	expr_opt  goto 94
+	Value  goto 97
+
+state 81
+	execfile_stmt:  EXECFILE IDENT_ALL '.' IDENT_ALL.    (16)
+
+	.  reduce 16 (src line 129)
+
+
+state 82
+	create_table:  CREATE TABLE table_name '(' column_def_list.',' primary_key ')' cluster_opt 
+	create_table:  CREATE TABLE table_name '(' column_def_list.')' cluster_opt 
+	column_def_list:  column_def_list.',' column_def 
+
+	','  shift 108
+	')'  shift 109
+	.  error
+
+
+state 83
+	column_def_list:  column_def.    (23)
+
+	.  reduce 23 (src line 195)
+
+
+state 84
+	column_def:  IDENT_LEGAL.column_type unique_opt not_null_opt 
+
+	BOOL  shift 112
+	INT64  shift 113
+	FLOAT64  shift 114
+	BYTES  shift 115
+	DATE  shift 116
+	TIMESTAMP  shift 117
+	.  error
+
+	column_type  goto 110
+	scalar_type  goto 111
+
+state 85
+	create_index:  CREATE unique_opt INDEX index_name ON.table_name '(' key_part_list ')' storing_clause_opt interleave_clause_list 
+
+	table_name  shift 118
+	.  error
+
+
+state 86
+	drop_index:  DROP INDEX index_name ON table_name.    (65)
+
+	.  reduce 65 (src line 443)
+
+
+state 87
+	select_stmt:  SELECT sel_field_list FROM table_name_list where_opt.limit_opt 
+	limit_opt: .    (103)
+
+	LIMIT  shift 120
+	.  reduce 103 (src line 641)
+
+	limit_opt  goto 119
+
+state 88
+	table_name_list:  table_name_list ','.IDENT_ALL 
+
+	IDENT  shift 53
+	IDENT_LEGAL  shift 54
+	.  error
+
+	IDENT_ALL  goto 121
+
+state 89
+	insert_stmt:  INSERT INTO table_name VALUES '('.value_list ')' 
+	Value: .    (90)
+
+	NULL  shift 104
+	TRUE  shift 102
+	FALSE  shift 103
+	decimal_value  shift 105
+	hex_value  shift 106
+	float_value  shift 107
+	string_value  shift 99
+	.  reduce 90 (src line 604)
+
+	int64_value  goto 100
+	float64_value  goto 101
+	Value  goto 123
+	value_list  goto 122
+
+state 90
+	column_name_list:  column_name_list.',' IDENT_LEGAL 
+	insert_stmt:  INSERT INTO table_name '(' column_name_list.')' VALUES '(' value_list ')' 
+
+	','  shift 63
+	')'  shift 124
+	.  error
+
+
+state 91
+	update_stmt:  UPDATE table_name SET set_opt_list where_opt.    (68)
+
+	.  reduce 68 (src line 472)
+
+
+state 92
+	set_opt_list:  set_opt_list ','.set_opt 
+
+	IDENT_LEGAL  shift 78
+	.  error
+
+	set_opt  goto 125
+
+state 93
+	set_opt:  IDENT_LEGAL '='.Value 
+	Value: .    (90)
+
+	NULL  shift 104
+	TRUE  shift 102
+	FALSE  shift 103
+	decimal_value  shift 105
+	hex_value  shift 106
+	float_value  shift 107
+	string_value  shift 99
+	.  reduce 90 (src line 604)
+
+	int64_value  goto 100
+	float64_value  goto 101
+	Value  goto 126
+
+state 94
+	where_opt:  WHERE expr_opt.    (79)
+	expr_opt:  expr_opt.AND expr_opt 
+	expr_opt:  expr_opt.OR expr_opt 
+
+	AND  shift 127
+	OR  shift 128
+	.  reduce 79 (src line 550)
+
+
+state 95
+	expr_opt:  '('.expr_opt ')' 
+	Value: .    (90)
+
+	IDENT  shift 53
+	IDENT_LEGAL  shift 54
+	NOT  shift 98
+	NULL  shift 104
+	TRUE  shift 102
+	FALSE  shift 103
+	'('  shift 95
+	decimal_value  shift 105
+	hex_value  shift 106
+	float_value  shift 107
+	string_value  shift 99
+	.  reduce 90 (src line 604)
+
+	int64_value  goto 100
+	float64_value  goto 101
+	IDENT_ALL  goto 96
+	expr_opt  goto 129
+	Value  goto 97
+
+state 96
+	expr_opt:  IDENT_ALL.compare_type Value 
+	expr_opt:  IDENT_ALL.compare_type IDENT_ALL 
+
+	'='  shift 131
+	'<'  shift 132
+	'>'  shift 133
+	LE  shift 134
+	GE  shift 135
+	NE  shift 136
+	.  error
+
+	compare_type  goto 130
+
+state 97
+	expr_opt:  Value.compare_type IDENT_ALL 
+	expr_opt:  Value.compare_type Value 
+
+	'='  shift 131
+	'<'  shift 132
+	'>'  shift 133
+	LE  shift 134
+	GE  shift 135
+	NE  shift 136
+	.  error
+
+	compare_type  goto 137
+
+state 98
+	expr_opt:  NOT.expr_opt 
+	Value: .    (90)
+
+	IDENT  shift 53
+	IDENT_LEGAL  shift 54
+	NOT  shift 98
+	NULL  shift 104
+	TRUE  shift 102
+	FALSE  shift 103
+	'('  shift 95
+	decimal_value  shift 105
+	hex_value  shift 106
+	float_value  shift 107
+	string_value  shift 99
+	.  reduce 90 (src line 604)
+
+	int64_value  goto 100
+	float64_value  goto 101
+	IDENT_ALL  goto 96
+	expr_opt  goto 138
+	Value  goto 97
+
+state 99
+	Value:  string_value.    (91)
+
+	.  reduce 91 (src line 608)
+
+
+state 100
+	Value:  int64_value.    (92)
+
+	.  reduce 92 (src line 612)
+
+
+state 101
+	Value:  float64_value.    (93)
+
+	.  reduce 93 (src line 616)
+
+
+state 102
+	Value:  TRUE.    (94)
+
+	.  reduce 94 (src line 620)
+
+
+state 103
+	Value:  FALSE.    (95)
+
+	.  reduce 95 (src line 624)
+
+
+state 104
+	Value:  NULL.    (96)
+
+	.  reduce 96 (src line 628)
+
+
+state 105
+	int64_value:  decimal_value.    (109)
+
+	.  reduce 109 (src line 668)
+
+
+state 106
+	int64_value:  hex_value.    (110)
+
+	.  reduce 110 (src line 674)
+
+
+state 107
+	float64_value:  float_value.    (111)
+
+	.  reduce 111 (src line 680)
+
+
+state 108
+	create_table:  CREATE TABLE table_name '(' column_def_list ','.primary_key ')' cluster_opt 
+	column_def_list:  column_def_list ','.column_def 
+	primary_key: .    (26)
+
+	IDENT_LEGAL  shift 84
+	PRIMARY  shift 141
+	.  reduce 26 (src line 211)
+
+	column_def  goto 140
+	primary_key  goto 139
+
+state 109
+	create_table:  CREATE TABLE table_name '(' column_def_list ')'.cluster_opt 
+	cluster_opt: .    (34)
+
+	','  shift 143
+	.  reduce 34 (src line 251)
+
+	cluster_opt  goto 142
+
+state 110
+	column_def:  IDENT_LEGAL column_type.unique_opt not_null_opt 
+	unique_opt: .    (52)
+
+	UNIQUE  shift 39
+	.  reduce 52 (src line 366)
+
+	unique_opt  goto 144
+
+state 111
+	column_type:  scalar_type.    (40)
+
+	.  reduce 40 (src line 282)
+
+
+state 112
+	scalar_type:  BOOL.    (41)
+
+	.  reduce 41 (src line 289)
+
+
+state 113
+	scalar_type:  INT64.    (42)
+
+	.  reduce 42 (src line 294)
+
+
+state 114
+	scalar_type:  FLOAT64.    (43)
+
+	.  reduce 43 (src line 298)
+
+
+state 115
+	scalar_type:  BYTES.'(' length ')' 
+
+	'('  shift 145
+	.  error
+
+
+state 116
+	scalar_type:  DATE.    (45)
+
+	.  reduce 45 (src line 307)
+
+
+state 117
+	scalar_type:  TIMESTAMP.    (46)
+
+	.  reduce 46 (src line 311)
+
+
+state 118
+	create_index:  CREATE unique_opt INDEX index_name ON table_name.'(' key_part_list ')' storing_clause_opt interleave_clause_list 
+
+	'('  shift 146
+	.  error
+
+
+state 119
+	select_stmt:  SELECT sel_field_list FROM table_name_list where_opt limit_opt.    (73)
+
+	.  reduce 73 (src line 509)
+
+
+state 120
+	limit_opt:  LIMIT.int_value 
+	limit_opt:  LIMIT.int_value ',' int_value 
+	limit_opt:  LIMIT.int_value OFFSET int_value 
+
+	decimal_value  shift 148
+	hex_value  shift 149
+	.  error
+
+	int_value  goto 147
+
+state 121
+	table_name_list:  table_name_list ',' IDENT_ALL.    (77)
+
+	.  reduce 77 (src line 541)
+
+
+state 122
+	insert_stmt:  INSERT INTO table_name VALUES '(' value_list.')' 
+	value_list:  value_list.',' Value 
+
+	','  shift 151
+	')'  shift 150
+	.  error
+
+
+state 123
+	value_list:  Value.    (88)
+
+	.  reduce 88 (src line 593)
+
+
+state 124
+	insert_stmt:  INSERT INTO table_name '(' column_name_list ')'.VALUES '(' value_list ')' 
+
+	VALUES  shift 152
+	.  error
+
+
+state 125
+	set_opt_list:  set_opt_list ',' set_opt.    (70)
+
+	.  reduce 70 (src line 488)
+
+
+state 126
+	set_opt:  IDENT_LEGAL '=' Value.    (71)
+
+	.  reduce 71 (src line 492)
+
+
+state 127
+	expr_opt:  expr_opt AND.expr_opt 
+	Value: .    (90)
+
+	IDENT  shift 53
+	IDENT_LEGAL  shift 54
+	NOT  shift 98
+	NULL  shift 104
+	TRUE  shift 102
+	FALSE  shift 103
+	'('  shift 95
+	decimal_value  shift 105
+	hex_value  shift 106
+	float_value  shift 107
+	string_value  shift 99
+	.  reduce 90 (src line 604)
+
+	int64_value  goto 100
+	float64_value  goto 101
+	IDENT_ALL  goto 96
+	expr_opt  goto 153
+	Value  goto 97
+
+state 128
+	expr_opt:  expr_opt OR.expr_opt 
+	Value: .    (90)
+
+	IDENT  shift 53
+	IDENT_LEGAL  shift 54
+	NOT  shift 98
+	NULL  shift 104
+	TRUE  shift 102
+	FALSE  shift 103
+	'('  shift 95
+	decimal_value  shift 105
+	hex_value  shift 106
+	float_value  shift 107
+	string_value  shift 99
+	.  reduce 90 (src line 604)
+
+	int64_value  goto 100
+	float64_value  goto 101
+	IDENT_ALL  goto 96
+	expr_opt  goto 154
+	Value  goto 97
+
+state 129
+	expr_opt:  '(' expr_opt.')' 
+	expr_opt:  expr_opt.AND expr_opt 
+	expr_opt:  expr_opt.OR expr_opt 
+
+	AND  shift 127
+	OR  shift 128
+	')'  shift 155
+	.  error
+
+
+state 130
+	expr_opt:  IDENT_ALL compare_type.Value 
+	expr_opt:  IDENT_ALL compare_type.IDENT_ALL 
+	Value: .    (90)
+
+	IDENT  shift 53
+	IDENT_LEGAL  shift 54
+	NULL  shift 104
+	TRUE  shift 102
+	FALSE  shift 103
+	decimal_value  shift 105
+	hex_value  shift 106
+	float_value  shift 107
+	string_value  shift 99
+	.  reduce 90 (src line 604)
+
+	int64_value  goto 100
+	float64_value  goto 101
+	IDENT_ALL  goto 157
+	Value  goto 156
+
+state 131
+	compare_type:  '='.    (97)
+
+	.  reduce 97 (src line 632)
+
+
+state 132
+	compare_type:  '<'.    (98)
+
+	.  reduce 98 (src line 634)
+
+
+state 133
+	compare_type:  '>'.    (99)
+
+	.  reduce 99 (src line 635)
+
+
+state 134
+	compare_type:  LE.    (100)
+
+	.  reduce 100 (src line 636)
+
+
+state 135
+	compare_type:  GE.    (101)
+
+	.  reduce 101 (src line 637)
+
+
+state 136
+	compare_type:  NE.    (102)
+
+	.  reduce 102 (src line 638)
+
+
+state 137
+	expr_opt:  Value compare_type.IDENT_ALL 
+	expr_opt:  Value compare_type.Value 
+	Value: .    (90)
+
+	IDENT  shift 53
+	IDENT_LEGAL  shift 54
+	NULL  shift 104
+	TRUE  shift 102
+	FALSE  shift 103
+	decimal_value  shift 105
+	hex_value  shift 106
+	float_value  shift 107
+	string_value  shift 99
+	.  reduce 90 (src line 604)
+
+	int64_value  goto 100
+	float64_value  goto 101
+	IDENT_ALL  goto 158
+	Value  goto 159
+
+138: shift/reduce conflict (shift 127(0), red'n 87(0)) on AND
+138: shift/reduce conflict (shift 128(0), red'n 87(0)) on OR
+state 138
+	expr_opt:  expr_opt.AND expr_opt 
+	expr_opt:  expr_opt.OR expr_opt 
+	expr_opt:  NOT expr_opt.    (87)
+
+	AND  shift 127
+	OR  shift 128
+	.  reduce 87 (src line 587)
+
+
+state 139
+	create_table:  CREATE TABLE table_name '(' column_def_list ',' primary_key.')' cluster_opt 
+
+	')'  shift 160
+	.  error
+
+
+state 140
+	column_def_list:  column_def_list ',' column_def.    (24)
+
+	.  reduce 24 (src line 200)
+
+
+state 141
+	primary_key:  PRIMARY.KEY '(' key_part_list ')' 
+
+	KEY  shift 161
+	.  error
+
+
+state 142
+	create_table:  CREATE TABLE table_name '(' column_def_list ')' cluster_opt.    (21)
+
+	.  reduce 21 (src line 175)
+
+
+state 143
+	cluster_opt:  ','.cluster 
+	on_delete_opt: .    (37)
+
+	ON  shift 164
+	.  reduce 37 (src line 267)
+
+	cluster  goto 162
+	on_delete_opt  goto 163
+
+state 144
+	column_def:  IDENT_LEGAL column_type unique_opt.not_null_opt 
+	not_null_opt: .    (49)
+
+	NOT  shift 166
+	.  reduce 49 (src line 342)
+
+	not_null_opt  goto 165
+
+state 145
+	scalar_type:  BYTES '('.length ')' 
+
+	MAX  shift 169
+	decimal_value  shift 148
+	hex_value  shift 149
+	.  error
+
+	length  goto 167
+	int_value  goto 168
+
+state 146
+	create_index:  CREATE unique_opt INDEX index_name ON table_name '('.key_part_list ')' storing_clause_opt interleave_clause_list 
+
+	IDENT_LEGAL  shift 172
+	.  error
+
+	key_part  goto 171
+	key_part_list  goto 170
+
+state 147
+	limit_opt:  LIMIT int_value.    (104)
+	limit_opt:  LIMIT int_value.',' int_value 
+	limit_opt:  LIMIT int_value.OFFSET int_value 
+
+	','  shift 173
+	OFFSET  shift 174
+	.  reduce 104 (src line 645)
+
+
+state 148
+	int_value:  decimal_value.    (107)
+
+	.  reduce 107 (src line 657)
+
+
+state 149
+	int_value:  hex_value.    (108)
+
+	.  reduce 108 (src line 663)
+
+
+state 150
+	insert_stmt:  INSERT INTO table_name VALUES '(' value_list ')'.    (66)
+
+	.  reduce 66 (src line 453)
+
+
+state 151
+	value_list:  value_list ','.Value 
+	Value: .    (90)
+
+	NULL  shift 104
+	TRUE  shift 102
+	FALSE  shift 103
+	decimal_value  shift 105
+	hex_value  shift 106
+	float_value  shift 107
+	string_value  shift 99
+	.  reduce 90 (src line 604)
+
+	int64_value  goto 100
+	float64_value  goto 101
+	Value  goto 175
+
+state 152
+	insert_stmt:  INSERT INTO table_name '(' column_name_list ')' VALUES.'(' value_list ')' 
+
+	'('  shift 176
+	.  error
+
+
+153: shift/reduce conflict (shift 127(0), red'n 85(0)) on AND
+153: shift/reduce conflict (shift 128(0), red'n 85(0)) on OR
+state 153
+	expr_opt:  expr_opt.AND expr_opt 
+	expr_opt:  expr_opt AND expr_opt.    (85)
+	expr_opt:  expr_opt.OR expr_opt 
+
+	AND  shift 127
+	OR  shift 128
+	.  reduce 85 (src line 575)
+
+
+154: shift/reduce conflict (shift 127(0), red'n 86(0)) on AND
+154: shift/reduce conflict (shift 128(0), red'n 86(0)) on OR
+state 154
+	expr_opt:  expr_opt.AND expr_opt 
+	expr_opt:  expr_opt.OR expr_opt 
+	expr_opt:  expr_opt OR expr_opt.    (86)
+
+	AND  shift 127
+	OR  shift 128
+	.  reduce 86 (src line 581)
+
+
+state 155
+	expr_opt:  '(' expr_opt ')'.    (80)
+
+	.  reduce 80 (src line 554)
+
+
+state 156
+	expr_opt:  IDENT_ALL compare_type Value.    (81)
+
+	.  reduce 81 (src line 559)
+
+
+state 157
+	expr_opt:  IDENT_ALL compare_type IDENT_ALL.    (84)
+
+	.  reduce 84 (src line 571)
+
+
+state 158
+	expr_opt:  Value compare_type IDENT_ALL.    (82)
+
+	.  reduce 82 (src line 563)
+
+
+state 159
+	expr_opt:  Value compare_type Value.    (83)
+
+	.  reduce 83 (src line 567)
+
+
+state 160
+	create_table:  CREATE TABLE table_name '(' column_def_list ',' primary_key ')'.cluster_opt 
+	cluster_opt: .    (34)
+
+	','  shift 143
+	.  reduce 34 (src line 251)
+
+	cluster_opt  goto 177
+
+state 161
+	primary_key:  PRIMARY KEY.'(' key_part_list ')' 
+
+	'('  shift 178
+	.  error
+
+
+state 162
+	cluster_opt:  ',' cluster.    (35)
+
+	.  reduce 35 (src line 256)
+
+
+state 163
+	cluster:  on_delete_opt.    (36)
+
+	.  reduce 36 (src line 261)
+
+
+state 164
+	on_delete_opt:  ON.DELETE CASCADE 
+	on_delete_opt:  ON.DELETE NO ACTION 
+
+	DELETE  shift 179
+	.  error
+
+
+state 165
+	column_def:  IDENT_LEGAL column_type unique_opt not_null_opt.    (25)
+
+	.  reduce 25 (src line 205)
+
+
+state 166
+	not_null_opt:  NOT.NULL 
+
+	NULL  shift 180
+	.  error
+
+
+state 167
+	scalar_type:  BYTES '(' length.')' 
+
+	')'  shift 181
+	.  error
+
+
+state 168
+	length:  int_value.    (47)
+
+	.  reduce 47 (src line 316)
+
+
+state 169
+	length:  MAX.    (48)
+
+	.  reduce 48 (src line 321)
+
+
+state 170
+	key_part_list:  key_part_list.',' key_part 
+	create_index:  CREATE unique_opt INDEX index_name ON table_name '(' key_part_list.')' storing_clause_opt interleave_clause_list 
+
+	','  shift 182
+	')'  shift 183
+	.  error
+
+
+state 171
+	key_part_list:  key_part.    (28)
+
+	.  reduce 28 (src line 220)
+
+
+state 172
+	key_part:  IDENT_LEGAL.key_order_opt 
+	key_order_opt: .    (31)
+
+	ASC  shift 185
+	DESC  shift 186
+	.  reduce 31 (src line 237)
+
+	key_order_opt  goto 184
+
+state 173
+	limit_opt:  LIMIT int_value ','.int_value 
+
+	decimal_value  shift 148
+	hex_value  shift 149
+	.  error
+
+	int_value  goto 187
+
+state 174
+	limit_opt:  LIMIT int_value OFFSET.int_value 
+
+	decimal_value  shift 148
+	hex_value  shift 149
+	.  error
+
+	int_value  goto 188
+
+state 175
+	value_list:  value_list ',' Value.    (89)
+
+	.  reduce 89 (src line 599)
+
+
+state 176
+	insert_stmt:  INSERT INTO table_name '(' column_name_list ')' VALUES '('.value_list ')' 
+	Value: .    (90)
+
+	NULL  shift 104
+	TRUE  shift 102
+	FALSE  shift 103
+	decimal_value  shift 105
+	hex_value  shift 106
+	float_value  shift 107
+	string_value  shift 99
+	.  reduce 90 (src line 604)
+
+	int64_value  goto 100
+	float64_value  goto 101
+	Value  goto 123
+	value_list  goto 189
+
+state 177
+	create_table:  CREATE TABLE table_name '(' column_def_list ',' primary_key ')' cluster_opt.    (20)
+
+	.  reduce 20 (src line 158)
+
+
+state 178
+	primary_key:  PRIMARY KEY '('.key_part_list ')' 
+
+	IDENT_LEGAL  shift 172
+	.  error
+
+	key_part  goto 171
+	key_part_list  goto 190
+
+state 179
+	on_delete_opt:  ON DELETE.CASCADE 
+	on_delete_opt:  ON DELETE.NO ACTION 
+
+	CASCADE  shift 191
+	NO  shift 192
+	.  error
+
+
+state 180
+	not_null_opt:  NOT NULL.    (50)
+
+	.  reduce 50 (src line 347)
+
+
+state 181
+	scalar_type:  BYTES '(' length ')'.    (44)
+
+	.  reduce 44 (src line 303)
+
+
+state 182
+	key_part_list:  key_part_list ','.key_part 
+
+	IDENT_LEGAL  shift 172
+	.  error
+
+	key_part  goto 193
+
+state 183
+	create_index:  CREATE unique_opt INDEX index_name ON table_name '(' key_part_list ')'.storing_clause_opt interleave_clause_list 
+	storing_clause_opt: .    (54)
+
+	STORING  shift 196
+	.  reduce 54 (src line 377)
+
+	storing_clause  goto 195
+	storing_clause_opt  goto 194
+
+state 184
+	key_part:  IDENT_LEGAL key_order_opt.    (30)
+
+	.  reduce 30 (src line 231)
+
+
+state 185
+	key_order_opt:  ASC.    (32)
+
+	.  reduce 32 (src line 242)
+
+
+state 186
+	key_order_opt:  DESC.    (33)
+
+	.  reduce 33 (src line 246)
+
+
+state 187
+	limit_opt:  LIMIT int_value ',' int_value.    (105)
+
+	.  reduce 105 (src line 649)
+
+
+state 188
+	limit_opt:  LIMIT int_value OFFSET int_value.    (106)
+
+	.  reduce 106 (src line 653)
+
+
+state 189
+	insert_stmt:  INSERT INTO table_name '(' column_name_list ')' VALUES '(' value_list.')' 
+	value_list:  value_list.',' Value 
+
+	','  shift 151
+	')'  shift 197
+	.  error
+
+
+state 190
+	primary_key:  PRIMARY KEY '(' key_part_list.')' 
+	key_part_list:  key_part_list.',' key_part 
+
+	','  shift 182
+	')'  shift 198
+	.  error
+
+
+state 191
+	on_delete_opt:  ON DELETE CASCADE.    (38)
+
+	.  reduce 38 (src line 273)
+
+
+state 192
+	on_delete_opt:  ON DELETE NO.ACTION 
+
+	ACTION  shift 199
+	.  error
+
+
+state 193
+	key_part_list:  key_part_list ',' key_part.    (29)
+
+	.  reduce 29 (src line 226)
+
+
+state 194
+	create_index:  CREATE unique_opt INDEX index_name ON table_name '(' key_part_list ')' storing_clause_opt.interleave_clause_list 
+	interleave_clause_list: .    (59)
+
+	INTERLEAVE  shift 202
+	.  reduce 59 (src line 404)
+
+	interleave_clause  goto 201
+	interleave_clause_list  goto 200
+
+state 195
+	storing_clause_opt:  storing_clause.    (55)
+
+	.  reduce 55 (src line 382)
+
+
+state 196
+	storing_clause:  STORING.'(' column_name_list ')' 
+
+	'('  shift 203
+	.  error
+
+
+state 197
+	insert_stmt:  INSERT INTO table_name '(' column_name_list ')' VALUES '(' value_list ')'.    (67)
+
+	.  reduce 67 (src line 463)
+
+
+state 198
+	primary_key:  PRIMARY KEY '(' key_part_list ')'.    (27)
+
+	.  reduce 27 (src line 215)
+
+
+state 199
+	on_delete_opt:  ON DELETE NO ACTION.    (39)
+
+	.  reduce 39 (src line 277)
+
+
+state 200
+	create_index:  CREATE unique_opt INDEX index_name ON table_name '(' key_part_list ')' storing_clause_opt interleave_clause_list.    (51)
+	interleave_clause_list:  interleave_clause_list.',' interleave_clause 
+
+	','  shift 204
+	.  reduce 51 (src line 352)
+
+
+state 201
+	interleave_clause_list:  interleave_clause.    (60)
+
+	.  reduce 60 (src line 409)
+
+
+state 202
+	interleave_clause:  INTERLEAVE.IN IDENT_ALL 
+
+	IN  shift 205
+	.  error
+
+
+state 203
+	storing_clause:  STORING '('.column_name_list ')' 
+
+	IDENT_LEGAL  shift 47
+	.  error
+
+	column_name_list  goto 206
+
+state 204
+	interleave_clause_list:  interleave_clause_list ','.interleave_clause 
+
+	INTERLEAVE  shift 202
+	.  error
+
+	interleave_clause  goto 207
+
+state 205
+	interleave_clause:  INTERLEAVE IN.IDENT_ALL 
+
+	IDENT  shift 53
+	IDENT_LEGAL  shift 54
+	.  error
+
+	IDENT_ALL  goto 208
+
+state 206
+	storing_clause:  STORING '(' column_name_list.')' 
+	column_name_list:  column_name_list.',' IDENT_LEGAL 
+
+	','  shift 63
+	')'  shift 209
+	.  error
+
+
+state 207
+	interleave_clause_list:  interleave_clause_list ',' interleave_clause.    (61)
+
+	.  reduce 61 (src line 414)
+
+
+state 208
+	interleave_clause:  INTERLEAVE IN IDENT_ALL.    (62)
+
+	.  reduce 62 (src line 419)
+
+
+state 209
+	storing_clause:  STORING '(' column_name_list ')'.    (56)
+
+	.  reduce 56 (src line 387)
+
+
+72 terminals, 48 nonterminals
+114 grammar rules, 210/16000 states
+6 shift/reduce, 0 reduce/reduce conflicts reported
+97 working sets used
+memory: parser 138/240000
+19 extra closures
+273 shift entries, 1 exceptions
+82 goto entries
+41 entries saved by goto default
+Optimizer space used: output 243/240000
+243 table entries, 0 zero
+maximum spread: 72, maximum offset: 205
